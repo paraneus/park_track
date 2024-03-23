@@ -1,0 +1,21 @@
+info:
+  title: "Fuck parkon"
+  description: "Controlling the controllers"
+  version: "0"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Token
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    DummyResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Some simple message

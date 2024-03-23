@@ -1,0 +1,47 @@
+version: "3"
+networks:
+  park-network:
+    driver: bridge
+
+services:
+  app:
+    image: park_track
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ./src/:/opt/backend/src
+    networks:
+      - park-network
+    ports:
+      - 6000:6000
+      - 6001:6001
+    environment:
+      CONTAINER_ROLE: app
+      FLASK_ENV: development
+
+  park_db:
+    image: postgres:14
+    command: postgres -c "log_statement=all"
+    networks:
+      - park-network
+    volumes:
+      - park_db:/var/lib/postgresql/data:delegated
+    environment:
+        POSTGRES_PASSWORD: secret
+
+  park_db_test:
+    image: postgres:14
+    command: postgres -c "max_connections=500"
+    networks:
+      - park-network
+    volumes:
+      - park_db_test:/var/lib/postgresql/data:delegated
+    environment:
+      POSTGRES_PASSWORD: secret
+
+volumes:
+  park_db:
+    driver: "local"
+  park_db_test:
+    driver: "local"

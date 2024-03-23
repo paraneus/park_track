@@ -1,0 +1,12 @@
+pytest
+pytest-mock  # mocker more powerful than monkeypatch
+coverage
+pytest-cov
+Flask
+Flask-Migrate
+Flask-SQLAlchemy
+marshmallow-jsonapi
+flask-marshmallow
+psycopg2-binary
+SQLAlchemy
+flasgger
