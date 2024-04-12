@@ -1,0 +1,23 @@
+/* Reset */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+	font: inherit;
+}
+
+html {
+	min-height: 100%;
+	color-scheme: light dark;
+}
+
+img,
+svg {
+	max-width: 100%;
+	display: block,
+}

@@ -1,9 +1,10 @@
 import os
 import datetime
+import pytest
+import pathlib
 from app import app_factory
 from app.models.Core import db
 from app.models.Tracking import Tracking
-import pytest
 
 
 @pytest.fixture()
@@ -21,6 +22,19 @@ def app():
 
     db.session.close()
     db.drop_all()
+
+@pytest.fixture
+def static_file(app):
+    file = pathlib.Path('app/static/static_file_for_test')
+    file.touch()
+
+    yield file
+
+    os.remove(file)
+
+@pytest.fixture
+def test_client(app):
+    return app.test_client()
 
 @pytest.fixture()
 def tracking_model():

@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Fuck Parkon</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+
+	<body>
+		<h1>  {{ title }} </h1>
+
+		{{ content }}
+
+		<ul>
+			{% for el in tracking_data %}
+				<li> {{ el.start_time }} to {{ el.end_time }} </li>
+			{% endfor %}
+		</ul>
+
+	</body>
+</html>

@@ -3,6 +3,7 @@ from flasgger import Swagger
 from app.models.Core import db, migrate
 from app.views.Dummy import DummyView
 from app.views.Tracking import TrackingView
+from app.views.RootView import RootView
 import os
 
 def register_api(app, name, view, root_element='/'):
@@ -12,8 +13,9 @@ def register_api(app, name, view, root_element='/'):
     app.add_url_rule(f'{path}/<uuid:id>', f'{name}', view_func=item)
 
 def register_endpoints(app):
-    register_api(app, '/dummy', DummyView)
-    register_api(app, '/track', TrackingView)
+    register_api(app, '/api/dummy', DummyView)
+    register_api(app, '/api/track', TrackingView)
+    register_api(app, '/', RootView)
 
 def setup_database(app):
     db.init_app(app)
