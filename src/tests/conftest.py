@@ -37,7 +37,7 @@ def test_client(app):
     return app.test_client()
 
 @pytest.fixture()
-def tracking_model():
+def tracking_model(app):
     tracking = Tracking(
         start_time = datetime.datetime.now(),
         end_time = datetime.datetime.now() + datetime.timedelta(days=7)

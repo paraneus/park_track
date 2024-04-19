@@ -6,3 +6,5 @@ SWAGGER = {
     'openapi': '3.0.2',
     'uiversion': 3
 }
+
+DEBUG = True

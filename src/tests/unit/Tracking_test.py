@@ -62,3 +62,10 @@ class TestTrackingModel():
         assert isinstance(result[0].start_time, datetime.datetime)
         assert isinstance(result[0].end_time, datetime.datetime)
         assert getattr(result[0], param) == new_time
+
+    def test_get_number_of_days_from_model(self, tracking_model):
+        # tracking_model period should always be 7 days according to fixture
+        delta = tracking_model.get_days()
+        assert isinstance(delta, float)
+        assert delta >= 7
+        assert tracking_model.get_days() == tracking_model.period

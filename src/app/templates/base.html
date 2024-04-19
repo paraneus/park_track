@@ -1,20 +1,138 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Fuck Parkon</title>
+		<title>Everybody lies</title>
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<script src="https://kit.fontawesome.com/ec9adce1d0.js" crossorigin="anonymous"></script>
 	</head>
 
 	<body>
-		<h1>  {{ title }} </h1>
+		<main>
+			<header>
+			<h1>{{ title }}</h1>
+			<p class="shiftright"> ... cause we do not trust ...</p>
+			</header>
 
-		{{ content }}
+			<section class="data_section">
+				<div class="section_content">
+					<h2>Start New Tracking</h2>
+					<form action="/" id="startTrack">
+						<input type="hidden", value="" name="track_id">
+						<button formmethod="post" formid="stopTrack", type="submit" name="start", value="pressed">Create new Tracking</button>
+					</form>
+				</div>
+			</section>
 
-		<ul>
-			{% for el in tracking_data %}
-				<li> {{ el.start_time }} to {{ el.end_time }} </li>
-			{% endfor %}
-		</ul>
+			{% if current_trackings %}
+			<section class="data_section">
+			<h2 class="section_title">Running Trackings</h2>
+			<div class="section_content">
+					<p>Currently running trackings:
+					{{ current_trackings|length }}</p>
+					<table class="data_table">
+						<thead>
+						<tr>
+							<th>Start Time</th>
+							<th>Action</th>
+						</tr>
+						</thead>
+						<tbody>
+						{% for el in current_trackings %}
+						<tr>
+							<td>{{ el.start_time.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+							<td>
+								<form action="/" id="interact_running">
+									<input type="hidden", value="{{ el.id }}" name="track_id">
+									<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="stop"><i class="fa-solid fa-stopwatch"></i></button>
+									<button class="dontshow" formmethod="post" formid="stopTrack", value="pressed" type="submit" name="edit">Edit</button>
+									<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+								</form>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+					</table>
+			</div>
+			</section>
+			{% endif %}
 
+
+			<section class="data_section">
+			<h2 class="section_title">Last 30 Days</h2>
+			<div class="section_content">
+				<div>
+					<p>Total days parked in last 30 days:</p>
+					{% if accountable_days >= 6 %}
+					<p class="critical">
+					{% elif accountable_days >= 5 %}
+					<p class="warning">
+					{% endif %}
+					{{accountable_days}}</p>
+				</div>
+
+				<table class="data_table">
+					<thead>
+					<tr>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Period</th>
+						<th>Action</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for el in tracking_cutoff %}
+					<tr>
+						<td>{{ el.start_time.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+						<td>{{ el.end_time.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+						<td>{{ el.period }}</td>
+						<td>
+							<form action="/" id="interact_accountable">
+								<input type="hidden", value="{{ el.id }}" name="track_id">
+								<button class="dontshow" formmethod="post" formid="interact_accountable", value="pressed" type="submit" name="edit">Edit</button>
+								<button formmethod="post" formid="interact_accountable", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+					<tbody>
+				</table>
+			</div>
+			</section>
+
+			<section class="data_section">
+			<h2 class="section_title">Entire History</h2>
+			<div class="section_content">
+				<p>Total days parked:
+				{{ days_total }}</p>
+				<table class="data_table">
+					<thead>
+					<tr>
+						<th>Start Time</th>
+						<th>End Time</th>
+						<th>Period</th>
+						<th>Action</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for el in tracking_total %}
+					<tr>
+						<td>{{ el.start_time.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+						<td>{{ el.end_time.strftime("%d.%m.%Y %H:%M:%S") }}</td>
+						<td>{{ el.period }}</td>
+						<td>
+							<form action="/" id="interact_history">
+								<input type="hidden", value="{{ el.id }}" name="track_id">
+								<button class="dontshow" formmethod="post" formid="interact_history", value="pressed" type="submit" name="Edit">Edit</button>
+								<button formmethod="post" formid="interact_history", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+							</form>
+						</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			</section>
+
+		</main>
 	</body>
 </html>

@@ -4,6 +4,7 @@ from app.models.Core import db, migrate
 from app.views.Dummy import DummyView
 from app.views.Tracking import TrackingView
 from app.views.RootView import RootView
+from app.cli.DataFiller import fill_trackingt_data
 import os
 
 def register_api(app, name, view, root_element='/'):
@@ -21,6 +22,9 @@ def setup_database(app):
     db.init_app(app)
     migrate.init_app(app, db)
 
+def register_cli(app):
+    app.cli.add_command(fill_trackingt_data)
+
 def create_app():
     app = Flask(__name__)
 
@@ -30,6 +34,7 @@ def create_app():
     Swagger(app, template_file=os.path.join('.', 'docs', 'template.yaml'))
 
     register_endpoints(app)
+    register_cli(app)
     setup_database(app)
     #Marshmallow(app)
 
