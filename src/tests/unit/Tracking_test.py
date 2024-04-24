@@ -62,3 +62,21 @@ class TestTrackingModel():
         assert isinstance(result[0].start_time, datetime.datetime)
         assert isinstance(result[0].end_time, datetime.datetime)
         assert getattr(result[0], param) == new_time
+
+    def test_retrieve_a_tracking_entry(self, tracking_model):
+        result = db.session.execute(
+            db.select(Tracking).filter_by(end_time = tracking_model.end_time)
+        ).scalars().all()
+
+        assert result
+        assert len(result) == 1
+
+    def test_retrieve_conditional(self, tracking_model):
+        result = db.session.execute(
+            db.select(Tracking).filter(
+                Tracking.end_time >= tracking_model.end_time - datetime.timedelta(seconds=20)
+            )
+        ).scalars().all()
+
+        assert result
+        assert len(result) == 1
