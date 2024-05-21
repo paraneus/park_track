@@ -5,12 +5,17 @@ from app.views.BaseView import BaseView
 from app.models.Tracking import Tracking
 from app.models.Core import db
 
+
 class RootView(BaseView):
     # HINT
     # i've added a few tracking entries to the DB via a cli hook:
     # flask -A  main:application backfill --days 100
     # you can do the same.
     def get(self):
+        # current timezone = zurich (summertime)
+        local_timezone = datetime.timezone(datetime.timedelta(hours=2))
+        local_now = datetime.datetime.now(local_timezone)
+
         # define the cutoff time
         cutoff = datetime.datetime.now() - datetime.timedelta(days=30)
 
@@ -35,9 +40,7 @@ class RootView(BaseView):
 
     def post(self):
         data = request.form.to_dict()
-        data = {k: v for k, v in data.items()}
-        pprint(data)
-
+    
         # this is sort of an abuse case, no idea if this is the way to handle it
         # but we'll see.
         pressed = [k for k in data.keys() if data[k] == 'pressed']
@@ -52,6 +55,11 @@ class RootView(BaseView):
             db.session.commit()
         elif data['track_id'] != '' and 'stop' in data.keys() and data['stop'] == 'pressed':
             tracking = db.get_or_404(Tracking, data['track_id'])
+            tracking.end_time = datetime.datetime.now()
+            db.session.commit()
+        elif data['track_id'] != '' and 'edit' in data.keys() and data['edit'] == 'pressed':
+            tracking = db.get_or_404(Tracking, data['track_id'])
+            tracking.start_time = datetime.datetime.now()
             tracking.end_time = datetime.datetime.now()
             db.session.commit()
         elif data['track_id'] != '' and 'delete' in data.keys() and data['delete'] == 'pressed':

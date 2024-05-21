@@ -4,6 +4,7 @@ from app.models.Core import db, migrate
 from app.views.Dummy import DummyView
 from app.views.Tracking import TrackingView
 from app.views.RootView import RootView
+from app.views.EditView import EditView
 from app.cli.DataFiller import fill_trackingt_data
 import os
 
@@ -17,6 +18,7 @@ def register_endpoints(app):
     register_api(app, '/api/dummy', DummyView)
     register_api(app, '/api/track', TrackingView)
     register_api(app, '/', RootView)
+    register_api(app, '/edit', EditView)
 
 def setup_database(app):
     db.init_app(app)

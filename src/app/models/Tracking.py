@@ -5,6 +5,7 @@ from sqlalchemy.dialects.postgresql import UUID, ARRAY, VARCHAR
 import pdb
 import uuid
 import datetime
+import math
 
 
 class Tracking(BaseModel):
@@ -16,7 +17,7 @@ class Tracking(BaseModel):
 
     def get_days(self) -> Union[float, None]:
         if self.start_time and self.end_time:
-            return (self.end_time - self.start_time).total_seconds()/86400
+            return math.ceil((self.end_time - self.start_time).total_seconds()/86400)
 
         return None
 

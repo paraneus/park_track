@@ -44,8 +44,8 @@
 								<form action="/" id="interact_running">
 									<input type="hidden", value="{{ el.id }}" name="track_id">
 									<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="stop"><i class="fa-solid fa-stopwatch"></i></button>
-									<button class="dontshow" formmethod="post" formid="stopTrack", value="pressed" type="submit" name="edit">Edit</button>
-									<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
+									<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="edit"><i class="fa-solid fa-pen"></i></button>
+									<button formmethod="post" formid="interact_accountable", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
 								</form>
 							</td>
 						</tr>
@@ -88,7 +88,7 @@
 						<td>
 							<form action="/" id="interact_accountable">
 								<input type="hidden", value="{{ el.id }}" name="track_id">
-								<button class="dontshow" formmethod="post" formid="interact_accountable", value="pressed" type="submit" name="edit">Edit</button>
+								<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="edit"><i class="fa-solid fa-pen"></i></button>
 								<button formmethod="post" formid="interact_accountable", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
 							</form>
 						</td>
@@ -122,7 +122,7 @@
 						<td>
 							<form action="/" id="interact_history">
 								<input type="hidden", value="{{ el.id }}" name="track_id">
-								<button class="dontshow" formmethod="post" formid="interact_history", value="pressed" type="submit" name="Edit">Edit</button>
+								<button formmethod="post" formid="stopTrack", value="pressed" type="submit" name="edit"><i class="fa-solid fa-pen"></i></button>
 								<button formmethod="post" formid="interact_history", value="pressed" type="submit" name="delete"><i class="fa-solid fa-trash"></i></button>
 							</form>
 						</td>
